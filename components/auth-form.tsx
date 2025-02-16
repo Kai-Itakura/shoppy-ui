@@ -5,6 +5,7 @@ import { AuthFormSchema, authFormSchema } from '@/constants/validation/auth-form
 import { useToast } from '@/hooks/use-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useActionState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from './ui/button';
@@ -37,7 +38,7 @@ const AuthForm = ({ actionFunction, mode }: AuthFormProps) => {
   });
 
   const { toast } = useToast();
-
+  const router = useRouter();
   useEffect(() => {
     switch (state.status) {
       case FORM_STATUS.SUCCESS:
@@ -47,6 +48,7 @@ const AuthForm = ({ actionFunction, mode }: AuthFormProps) => {
         });
 
         form.reset();
+        router.push('/');
 
         break;
 

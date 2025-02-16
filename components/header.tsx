@@ -15,7 +15,7 @@ export function Header() {
   const { setTheme } = useTheme();
 
   return (
-    <header className='bg-gray-400 py-2 px-4 flex justify-end items-center'>
+    <header className='bg-black py-2 px-4 flex justify-end items-center shadow-md'>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button

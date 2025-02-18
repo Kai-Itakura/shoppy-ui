@@ -5,10 +5,9 @@ import { post } from '@/app/util/fetch';
 import { validateFormData } from '@/app/validation/form-validation';
 import { authFormSchema } from '@/schema/auth-form.schema';
 
-export async function createUser(_prevState: FormStatus, formData: FormData): Promise<FormStatus> {
+export async function login(_state: FormStatus, formData: FormData): Promise<FormStatus> {
   try {
     const parsed = validateFormData(formData, authFormSchema);
-    // バリデーションエラー
     if (parsed.error) {
       return {
         status: FORM_STATUS.ERROR,
@@ -16,24 +15,25 @@ export async function createUser(_prevState: FormStatus, formData: FormData): Pr
       };
     }
 
-    const res = await post('user', parsed.data);
+    const res = await post('auth/login', parsed.data);
 
     if (!res.ok) {
-      if (res.status === 409) {
+      if (res.status === 401) {
         return {
           status: FORM_STATUS.ERROR,
-          message: 'Email is already used!',
+          message: 'User unauthorized!',
         };
       }
+
       return {
         status: FORM_STATUS.ERROR,
-        message: 'Failed to signin!',
+        message: 'Failed to login!',
       };
     }
 
     return {
       status: FORM_STATUS.SUCCESS,
-      message: 'Successfully signin!',
+      message: 'Successfully login!',
     };
   } catch (error) {
     console.error(error);

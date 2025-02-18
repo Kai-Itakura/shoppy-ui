@@ -1,8 +1,8 @@
 'use client';
 
-import { FORM_STATUS, FormStatus } from '@/constants/action-status';
-import { AuthFormSchema, authFormSchema } from '@/constants/validation/auth-form.shema';
+import { FORM_STATUS, FormStatus } from '@/actions/action-status';
 import { useToast } from '@/hooks/use-toast';
+import { AuthFormSchema, authFormSchema } from '@/schema/auth-form.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -15,13 +15,15 @@ import { Input } from './ui/input';
 
 type AuthFormProps = {
   actionFunction: (state: FormStatus, payload: FormData) => FormStatus | Promise<FormStatus>;
-  mode: FORM_TYPE;
+  mode: FormType;
 };
 
-export enum FORM_TYPE {
-  SIGNUP = 'signup',
+enum FORM_TYPE {
+  SIGNUP = 'signin',
   LOGIN = 'login',
 }
+
+export type FormType = `${FORM_TYPE}`;
 
 const AuthForm = ({ actionFunction, mode }: AuthFormProps) => {
   const form = useForm<AuthFormSchema>({
@@ -117,6 +119,7 @@ const AuthForm = ({ actionFunction, mode }: AuthFormProps) => {
               </Button>
               <Button
                 className='w-24'
+                variant='ghost'
                 asChild
               >
                 <Link href={`/${oppositeMode}`}>{oppositeMode}</Link>

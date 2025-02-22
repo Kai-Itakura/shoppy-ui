@@ -1,6 +1,6 @@
 'use client';
 
-import { FORM_STATUS, FormStatus } from '@/actions/action-status';
+import { FORM_STATUS, FormStatus } from '@/app/(auth)/actions/action-status';
 import { useToast } from '@/hooks/use-toast';
 import { AuthFormSchema, authFormSchema } from '@/schema/auth-form.schema';
 import { zodResolver } from '@hookform/resolvers/zod';

@@ -1,6 +1,6 @@
 'use server';
 
-import { FORM_STATUS, FormStatus } from '@/actions/action-status';
+import { FORM_STATUS, FormStatus } from '@/app/(auth)/actions/action-status';
 import { post } from '@/app/util/fetch';
 import { validateFormData } from '@/app/validation/form-validation';
 import { authFormSchema } from '@/schema/auth-form.schema';

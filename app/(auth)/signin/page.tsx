@@ -1,5 +1,3 @@
-'use client';
-
 import AuthForm from '@/components/auth-form';
 import { createUser } from './actions/create-user';
 

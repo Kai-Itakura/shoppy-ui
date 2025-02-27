@@ -1,5 +1,6 @@
 import { API_URL } from '@/constants/api';
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 interface CookieInfo {
   key: string;
@@ -21,12 +22,16 @@ export async function post<T>(path: string, parsedData: T, options?: RequestInit
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Cookie: await generateRequestCookie(),
     },
     body: JSON.stringify(parsedData),
+    credentials: 'include',
     ...options,
   });
 
-  await setCookie(res);
+  if (res.status === 401) redirect('/login');
+
+  await setCookieInResponse(res);
 
   return res;
 }
@@ -37,7 +42,16 @@ async function getHeaders(): Promise<HeadersInit> {
   };
 }
 
-async function setCookie(res: Response): Promise<void> {
+async function generateRequestCookie(): Promise<string> {
+  const cookieManager = await cookies();
+  const requestCookies = cookieManager.getAll();
+  return requestCookies.reduce<string>((cookieString, cookie, index) => {
+    const isLast = index === requestCookies.length - 1;
+    return (cookieString += isLast ? `${cookie.name}=${cookie.value}` : `${cookie.name}=${cookie.value}; `);
+  }, '');
+}
+
+async function setCookieInResponse(res: Response): Promise<void> {
   const setCookies = res.headers.getSetCookie();
   const cookieInfos = setCookies.map<CookieInfo>((setCookie) => {
     const splitCookie = setCookie.split(';');
@@ -50,6 +64,7 @@ async function setCookie(res: Response): Promise<void> {
   cookieInfos.forEach((cookieInfo) => {
     cookieManager.set(cookieInfo.key, cookieInfo.value, {
       secure: true,
+      sameSite: 'none',
       httpOnly: true,
       maxAge: cookieInfo.maxAge,
     });

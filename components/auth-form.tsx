@@ -1,8 +1,8 @@
 'use client';
 
-import { FORM_STATUS, FormStatus } from '@/app/(auth)/actions/action-status';
+import { AuthFormSchema, authFormSchema } from '@/app/(auth)/schema/auth-form.schema';
+import { FORM_STATUS, FormState } from '@/constants/action-status';
 import { useToast } from '@/hooks/use-toast';
-import { AuthFormSchema, authFormSchema } from '@/schema/auth-form.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -14,7 +14,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from './ui/input';
 
 type AuthFormProps = {
-  actionFunction: (state: FormStatus, payload: FormData) => FormStatus | Promise<FormStatus>;
+  actionFunction: (state: FormState, formData: FormData) => FormState | Promise<FormState>;
   mode: FormType;
 };
 
@@ -35,7 +35,7 @@ const AuthForm = ({ actionFunction, mode }: AuthFormProps) => {
     },
   });
 
-  const [state, formAction, isPending] = useActionState<FormStatus, FormData>(actionFunction, {
+  const [state, formAction, isPending] = useActionState<FormState, FormData>(actionFunction, {
     status: FORM_STATUS.IDOL,
   });
 
@@ -102,6 +102,8 @@ const AuthForm = ({ actionFunction, mode }: AuthFormProps) => {
                   <FormLabel>Password</FormLabel>
                   <FormControl>
                     <Input
+                      type='password'
+                      autoComplete='on'
                       placeholder='password'
                       {...field}
                     />

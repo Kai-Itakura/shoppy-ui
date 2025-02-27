@@ -4,7 +4,7 @@ export enum FORM_STATUS {
   ERROR = 'error',
 }
 
-export type FormStatus =
+export type FormState =
   | { status: FORM_STATUS.IDOL }
   | { status: FORM_STATUS.SUCCESS; message: string }
   | { status: FORM_STATUS.ERROR; message: string };

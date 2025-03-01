@@ -4,13 +4,13 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { FormState } from '@/constants/action-status';
+import { FORM_STATUS, FormState } from '@/constants/action-status';
 import { useToast } from '@/hooks/use-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useActionState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { createProduct } from '../actions/create-product';
-import { createProductSchema, CreateProductSchema } from '../schema/create-product.schema';
+import { createProduct } from '../../actions/create-product';
+import { createProductSchema, CreateProductSchema } from '../../schema/create-product.schema';
 
 type ProductFormProps = {
   onSubmitSuccess: () => void;
@@ -28,8 +28,9 @@ export default function ProductForm({ onSubmitSuccess }: ProductFormProps) {
   });
 
   const [state, formAction, isPending] = useActionState<FormState, FormData>(createProduct, {
-    status: FORM_STATUS.IDOL,
+    status: FORM_STATUS.IDLE,
   });
+  console.log('🔥 ~ ProductForm ~ state:', state);
 
   const { toast } = useToast();
   useEffect(() => {
@@ -53,8 +54,7 @@ export default function ProductForm({ onSubmitSuccess }: ProductFormProps) {
       default:
         break;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state]);
+  }, [state, form, onSubmitSuccess, toast]);
 
   return (
     <Form {...form}>

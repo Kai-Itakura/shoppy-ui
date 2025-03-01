@@ -2,7 +2,8 @@
 
 import { post } from '@/app/util/fetch';
 import { validateFormData } from '@/app/validation/form-validation';
-import { FormState } from '@/constants/action-status';
+import { FORM_STATUS, FormState } from '@/constants/action-status';
+import { revalidateTag } from 'next/cache';
 import { createProductSchema } from '../schema/create-product.schema';
 
 export async function createProduct(_state: FormState, formData: FormData): Promise<FormState> {
@@ -21,6 +22,8 @@ export async function createProduct(_state: FormState, formData: FormData): Prom
       message: 'Failed to create product!',
     };
   }
+
+  revalidateTag('product');
 
   return {
     status: FORM_STATUS.SUCCESS,

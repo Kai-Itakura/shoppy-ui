@@ -19,7 +19,7 @@ export default function CreateProductModal() {
       <DialogTrigger>
         <AddButton />
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className='rounded-md'>
         <DialogHeader>
           <DialogTitle className='text-center'>Create Product</DialogTitle>
         </DialogHeader>

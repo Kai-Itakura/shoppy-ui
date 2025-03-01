@@ -8,12 +8,13 @@ interface CookieInfo {
   maxAge: number;
 }
 
-export async function get(path: string, options?: RequestInit) {
+export async function get(path: string, options?: RequestInit, tags?: string[]) {
   return fetch(`${API_URL}/${path}`, {
     headers: {
       ...(await getHeaders()),
     },
     ...options,
+    next: { tags },
   });
 }
 

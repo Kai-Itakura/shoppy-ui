@@ -65,8 +65,7 @@ const AuthForm = ({ actionFunction, mode }: AuthFormProps) => {
       default:
         break;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state]);
+  }, [state, form, router, toast]);
 
   const oppositeMode = mode === FORM_TYPE.SIGNUP ? FORM_TYPE.LOGIN : FORM_TYPE.SIGNUP;
 

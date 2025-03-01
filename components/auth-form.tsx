@@ -36,7 +36,7 @@ const AuthForm = ({ actionFunction, mode }: AuthFormProps) => {
   });
 
   const [state, formAction, isPending] = useActionState<FormState, FormData>(actionFunction, {
-    status: FORM_STATUS.IDOL,
+    status: FORM_STATUS.IDLE,
   });
 
   const { toast } = useToast();

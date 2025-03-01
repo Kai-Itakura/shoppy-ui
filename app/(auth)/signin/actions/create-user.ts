@@ -3,7 +3,7 @@
 import { authFormSchema } from '@/app/(auth)/schema/auth-form.schema';
 import { post } from '@/app/util/fetch';
 import { validateFormData } from '@/app/validation/form-validation';
-import { FORM_STATUS, FormState } from '@/constants/action-status';
+import { FormState } from '@/constants/action-status';
 
 export async function createUser(_prevState: FormState, formData: FormData): Promise<FormState> {
   try {

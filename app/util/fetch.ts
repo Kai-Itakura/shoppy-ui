@@ -37,7 +37,7 @@ export async function post<T>(path: string, parsedData: T, options?: RequestInit
   return res;
 }
 
-async function getHeaders(): Promise<HeadersInit> {
+export async function getHeaders(): Promise<HeadersInit> {
   return {
     Cookie: (await cookies()).toString(),
   };

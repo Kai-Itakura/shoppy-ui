@@ -6,7 +6,18 @@ export function middleware(req: NextRequest) {
   const auth = req.cookies.get(AUTH_COOKIE_NAME)?.value;
 
   if (!auth && !publicRoutes.some((route) => req.nextUrl.pathname.startsWith(route.path))) {
-    return NextResponse.redirect(new URL('/login', req.url));
+    if (req.headers.get('accept') === 'text/x-component') {
+      return new NextResponse(null, {
+        status: 303,
+        headers: {
+          'X-Action-Redirect': '/login',
+        },
+      });
+    }
+
+    return NextResponse.redirect(new URL('/login', req.url), {
+      status: 303,
+    });
   }
 }
 

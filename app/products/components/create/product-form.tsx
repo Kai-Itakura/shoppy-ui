@@ -56,7 +56,8 @@ export default function ProductForm({ onSubmitSuccess }: ProductFormProps) {
       default:
         break;
     }
-  }, [state, form, onSubmitSuccess, toast]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state]);
 
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [preview, setPreview] = useState('');

@@ -7,6 +7,7 @@ export function middleware(req: NextRequest) {
 
   if (!auth && !publicRoutes.some((route) => req.nextUrl.pathname.startsWith(route.path))) {
     if (req.headers.get('accept') === 'text/x-component') {
+      console.log('🔥: Unauthenticated post request', req);
       return new NextResponse(null, {
         status: 303,
         headers: {

@@ -13,7 +13,7 @@ export default function Header() {
   const pages = isAuthenticated ? protectedRoutes : publicRoutes;
 
   return (
-    <header className='bg-slate-600  py-2 px-4 flex justify-between gap-2 items-center shadow-md'>
+    <header className='top-0 w-svw bg-slate-600  py-2 px-4 flex justify-between gap-2 items-center shadow-md'>
       <DesktopNav pages={pages} />
       <MobileNav pages={pages} />
       <div className='flex justify-end gap-2 items-center'>

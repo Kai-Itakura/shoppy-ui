@@ -6,7 +6,7 @@ import { FormattedProduct, Product } from '../interfaces/product.type';
 import { formatPrice } from '../util/formatPrice';
 
 export async function GetProducts(): Promise<FormattedProduct[]> {
-  const res = await get('products', undefined, ['products']);
+  const res = await get('products', undefined, ['products'], new URLSearchParams({ status: 'available' }));
   if (!res.ok) {
     if (res.status === 401) redirect('login');
   }

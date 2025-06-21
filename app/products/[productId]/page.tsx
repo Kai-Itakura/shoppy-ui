@@ -1,3 +1,4 @@
+import Checkout from '@/app/checkout/checkout';
 import Image from 'next/image';
 import { getProductImagePath } from '../util/getProductImagePath';
 import getProduct from './actions/get-product';
@@ -24,6 +25,7 @@ export default async function Product({ params }: ProductProps) {
         <h2 className='font-bold text-3xl'>{product.name}</h2>
         <p>{product.description}</p>
         <p className='text-lg'>{product.price}</p>
+        <Checkout productId={product.id} />
       </div>
     </div>
   );

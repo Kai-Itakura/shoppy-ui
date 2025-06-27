@@ -1,22 +1,32 @@
 'use client';
 
+import getAuthentication from '@/app/(auth)/actions/get-authentication';
 import { API_URL } from '@/constants/api';
 import Link from 'next/link';
 import { useEffect } from 'react';
-import { io } from 'socket.io-client';
+import { io, Socket } from 'socket.io-client';
 import revalidateProducts from '../actions/revalidate-products';
 import { FormattedProduct } from '../interfaces/product.type';
 import ProductCard from './product-card';
 
 const ProductsGrid = ({ products }: { products: FormattedProduct[] }) => {
   useEffect(() => {
-    const socket = io(API_URL);
-    socket.on('productUpdated', () => {
-      revalidateProducts();
-    });
+    let socket: Socket | null;
+
+    const createSocket = async () => {
+      socket = io(API_URL, {
+        auth: {
+          Authentication: await getAuthentication(),
+        },
+      });
+      socket.on('productUpdated', () => {
+        revalidateProducts();
+      });
+    };
+    createSocket();
 
     return () => {
-      socket.disconnect();
+      socket?.disconnect();
     };
   }, []);
 
